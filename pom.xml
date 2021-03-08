@@ -50,6 +50,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+	    	<groupId>javax.servlet</groupId>
+	    	<artifactId>javax.servlet-api</artifactId>
+	    	<scope>provided</scope>
+		</dependency>
+			<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>			
+		</dependency>
+			<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
@@ -62,6 +71,26 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <version>2.0</version>
+    <executions>
+        <execution>
+            <id>tomcat-run</id>
+            <goals>
+                <goal>exec-war-only</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+                <path>/</path>
+                <enableNaming>false</enableNaming>
+                <finalName>webapp.jar</finalName>
+                <charset>utf-8</charset>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
 			<plugin>
             	<groupId>com.github.eirslett</groupId>
             	<artifactId>frontend-maven-plugin</artifactId>
@@ -78,11 +107,14 @@
                     	</goals>
                 	</execution>
                     <execution>
-                        <id>npm-install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                    </execution>
+				        <id>npm-build</id>
+				        <goals>
+				            <goal>npm</goal>
+				        </goals>
+				        <configuration>
+				            <arguments>run-script build</arguments>
+				        </configuration>
+				    </execution>
             </executions>
         </plugin>
 		</plugins>
